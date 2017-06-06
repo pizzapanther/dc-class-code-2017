@@ -1,0 +1,14 @@
+<p>
+  <img src="{{image}}" alt="cat dog" style="width: 200px;">
+  {{{content}}}
+</p>
+<ul>
+  {{#each friends}}
+  <li>
+    {{name}}
+    {{# if age}}
+     - you are {{age}}
+    {{/if}}
+  </li>
+  {{/each}}
+</ul>
