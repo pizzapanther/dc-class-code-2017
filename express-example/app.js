@@ -1,7 +1,17 @@
 var express = require('express');
 var app = express();
+var body_parser = require('body-parser');
+
+var promise = require('bluebird');
+var pgp = require('pg-promise')({
+  promiseLib: promise
+});
+
+var db = pgp({database: 'test'});
 
 app.set('view engine', 'hbs');
+
+app.use(body_parser.urlencoded({extended: false}));
 app.use('/static', express.static('public'));
 
 app.get('/', function (request, response) {
@@ -37,6 +47,29 @@ app.get('/hello', function (request, response) {
   };
   
   response.render('hello.hbs', context);
+});
+
+app.get('/form', function (request, response) {
+  response.render('form.hbs', {title: 'html form'});
+});
+
+app.post('/submit', function (request, response) {
+  console.log(request.body);
+  response.redirect('/thank-you');
+});
+
+app.get('/thank-you', function (request, response) {
+  response.render('thanks.hbs', {title: 'Thanks!'});
+});
+
+app.get('/search', function (request, response, next) {
+  let term = request.query.searchTerm;
+  let query = "SELECT * FROM restaurant WHERE restaurant.name ILIKE '%$1#%'";
+  db.any(query, term)
+    .then(function (results) {
+      response.render('search.hbs', {results: results});
+    })
+    .catch(next);
 });
 
 app.listen(8000, function () {
