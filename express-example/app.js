@@ -14,6 +14,11 @@ app.set('view engine', 'hbs');
 app.use(body_parser.urlencoded({extended: false}));
 app.use('/static', express.static('public'));
 
+app.use(function (request, response, next) {
+  console.log(request.method, request.path);
+  next();
+});
+
 app.get('/', function (request, response) {
   response.send('<h1>Hello World</h1>');
 });
