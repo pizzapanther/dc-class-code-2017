@@ -5,7 +5,7 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 app.set('view engine', 'hbs');
-
+app.use('/static', express.static('static'));
 app.get('/', function (request, response) {
   response.render('chat.hbs');
 });

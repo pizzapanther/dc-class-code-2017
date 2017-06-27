@@ -1,0 +1,43 @@
+@nice-blue: #5B83AD;
+@light-blue: @nice-blue + #111;
+
+@small: ~"max-width: 768px";
+
+#header {
+  color: lighten(@light-blue, 20%);
+  
+  &.mobile {
+    font-weight: normal;
+    width: ~"calc(100% - 20px)";
+  }
+  
+  a {
+    text-decoration: none;
+    color: lighten(@light-blue, 20%);
+    
+    span {
+      font-weight: bold;
+    }
+    
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+  
+  @media (@small) {
+    color: black;
+  }
+}
+
+.bordered {
+  border: 1px solid @nice-blue;
+}
+
+.padding {
+  padding: 10px;
+}
+
+pre {
+  .bordered;
+  .padding;
+}

@@ -2,9 +2,14 @@
 <html>
   <head>
     <title>Chat App</title>
+    <link rel="stylesheet" href="/static/main.css">
   </head>
   <body>
-    <h1>Chat App</h1>
+    <h1 id="header">
+      <a href="">
+        <span>Chat App</span>
+      </a>
+    </h1>
     <input id="message" onkeypress="send_message(event)">
     <pre id="chat-box"></pre>
     <script src="/socket.io/socket.io.js"></script>

@@ -21,6 +21,7 @@ def deploy ():
     
     with prefix(VENV):
       run('npm install  > install.log')
+      run('pg-migrate up')
       
     run('pm2 restart all > restart.log')
     
