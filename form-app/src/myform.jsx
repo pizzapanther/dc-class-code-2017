@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import AppBar from 'material-ui/AppBar';
 import {Card, CardActions, CardTitle, CardText} from 'material-ui/Card';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
@@ -16,6 +15,8 @@ class MyForm extends Component {
       name: '',
       color: 'blue'
     };
+    
+    this.history = props.history;
   }
   
   update_state (event, key) {
@@ -34,12 +35,12 @@ class MyForm extends Component {
   handleSubmit (event) {
     console.log('submitted:', this.state);
     event.preventDefault();
+    this.history.push('/');
   }
   
   render () {
     return (
       <div>
-        <AppBar title="My Awesome Form"/>
         <form onSubmit={event => this.handleSubmit(event)}>
           <Card className="md-card">
             <CardTitle title="My Form"/>
