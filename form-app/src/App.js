@@ -8,6 +8,11 @@ import MyForm from './myform';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {red700} from 'material-ui/styles/colors';
 
+import IconButton from 'material-ui/IconButton';
+import IconMenu from 'material-ui/IconMenu';
+import MenuItem from 'material-ui/MenuItem';
+import MoreVertIcon from 'material-ui/svg-icons/navigation/menu';
+
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 const Home = () => (<h2>Home Page</h2>);
@@ -31,23 +36,32 @@ const Article = (props) => {
   )
 }
 
+const AppMenu = (props) => (
+  <IconMenu
+    {...props}
+    iconButtonElement={
+      <IconButton><MoreVertIcon color="white" /></IconButton>
+    }
+    targetOrigin={{horizontal: 'right', vertical: 'top'}}
+    anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+  >
+    <MenuItem>
+      <Link to="/" className="icon-menu">Home</Link>
+    </MenuItem>
+    <MenuItem>
+      <Link to="/form" className="icon-menu">Form</Link>
+    </MenuItem>
+  </IconMenu>
+);
+
 class App extends Component {
   render() {
     return (
       <MuiThemeProvider muiTheme={theme}>
         <div>
-          <AppBar title="My Awesome Form"/>
           <BrowserRouter>
             <div>
-              <ul>
-                <li>
-                  <Link to="/">Home</Link>
-                </li>
-                <li>
-                  <Link to="/form">Form</Link>
-                </li>
-              </ul>
-              
+              <AppBar title="My Awesome Form" iconElementLeft={<AppMenu/>}/>
               <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/form" component={MyForm}/>
