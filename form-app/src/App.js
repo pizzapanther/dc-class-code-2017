@@ -15,6 +15,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/menu';
 
 import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 
+import {auth} from './fsociety';
+
 const Home = () => (<h2>Home Page</h2>);
 
 const NoMatch= ({ location }) => (
@@ -55,6 +57,17 @@ const AppMenu = (props) => (
 );
 
 class App extends Component {
+  login () {
+    console.log('logging in');
+    
+    auth()
+      .then(function (user) {
+        console.log(user);
+      })
+      .catch(function (e) {
+        console.log(e);
+      });
+  }
   render() {
     return (
       <MuiThemeProvider muiTheme={theme}>
@@ -62,6 +75,9 @@ class App extends Component {
           <BrowserRouter>
             <div>
               <AppBar title="My Awesome Form" iconElementLeft={<AppMenu/>}/>
+              <div>
+                <button onClick={(e) => this.login(e)}>Login</button>
+              </div>
               <Switch>
                 <Route exact path="/" component={Home}/>
                 <Route path="/form" component={MyForm}/>
