@@ -10,6 +10,9 @@ import './myform.css';
 
 import database, {User} from './fsociety';
 
+import { addContact } from './actions';
+import { connect } from 'react-redux';
+
 class MyForm extends Component {
   constructor (props) {
     super(props);
@@ -36,12 +39,14 @@ class MyForm extends Component {
   
   handleSubmit (event) {
     console.log('submitted:', this.state);
-    database.ref('contacts/' + User.user.uid).set({
-      paul: {name: "Paul B"},
-      jim: {name: "Jim"},
-    });
+    //database.ref('contacts/' + User.user.uid).set({
+    //  paul: {name: "Paul B"},
+    //  jim: {name: "Jim"},
+    //});
     event.preventDefault();
-    this.history.push('/');
+    //this.history.push('/');
+    
+    this.props.onSubmit(this.state.name, this.state);
   }
   
   render () {
@@ -68,9 +73,30 @@ class MyForm extends Component {
             </CardActions>
           </Card>
         </form>
+        {Object.keys(this.props.contacts).map((key) => {
+          return <div key={key}>
+            Key: {key}, Value: {this.props.contacts[key].name}
+          </div>;
+        })}
       </div>
     );
   }
 }
+
+function mapStateToProps (state) {
+  return {contacts: state};
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    onSubmit: function (id, data) {
+      dispatch(addContact(id, data));
+    }
+  }
+}
+
+MyForm = connect(
+  mapStateToProps, mapDispatchToProps
+)(MyForm);
 
 export default MyForm

@@ -17,6 +17,9 @@ import {BrowserRouter, Route, Link, Switch, Redirect} from 'react-router-dom';
 
 import {auth} from './fsociety';
 
+import { Provider } from 'react-redux';
+import store from './store';
+
 const Home = () => (<h2>Home Page</h2>);
 
 const NoMatch= ({ location }) => (
@@ -70,25 +73,27 @@ class App extends Component {
   }
   render() {
     return (
-      <MuiThemeProvider muiTheme={theme}>
-        <div>
-          <BrowserRouter>
-            <div>
-              <AppBar title="My Awesome Form" iconElementLeft={<AppMenu/>}/>
+      <Provider store={store}>
+        <MuiThemeProvider muiTheme={theme}>
+          <div>
+            <BrowserRouter>
               <div>
-                <button onClick={(e) => this.login(e)}>Login</button>
+                <AppBar title="My Awesome Form" iconElementLeft={<AppMenu/>}/>
+                <div>
+                  <button onClick={(e) => this.login(e)}>Login</button>
+                </div>
+                <Switch>
+                  <Route exact path="/" component={Home}/>
+                  <Route path="/form" component={MyForm}/>
+                  <Redirect from="/old-form" to="/form"/>
+                  <Route path="/article/:id" component={Article}/>
+                  <Route component={NoMatch}/>
+                </Switch>
               </div>
-              <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/form" component={MyForm}/>
-                <Redirect from="/old-form" to="/form"/>
-                <Route path="/article/:id" component={Article}/>
-                <Route component={NoMatch}/>
-              </Switch>
-            </div>
-          </BrowserRouter>
-        </div>
-      </MuiThemeProvider>
+            </BrowserRouter>
+          </div>
+        </MuiThemeProvider>
+      </Provider>
     );
   }
 }
