@@ -22,6 +22,11 @@ class MyForm extends Component {
     };
     
     this.history = props.history;
+    
+    var obj = ['paul'];
+    var obj2 = ['narf@aol.com'];
+    var cloned = [...obj, ...obj2];
+    console.log(cloned);
   }
   
   update_state (event, key) {

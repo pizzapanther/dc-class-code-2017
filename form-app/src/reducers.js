@@ -1,10 +1,11 @@
-var initialState = {};
+import { combineReducers } from 'redux';
 
-export function contacts (state, action) {
-  if (state === undefined) {
-    return initialState;
-  }
-  
+var initialState = {
+  contacts: {},
+  showFavorites: 'SHOW_ALL'
+};
+
+export function contacts (state = initialState, action) {
   switch (action.type) {
     case 'ADD_CONTACT':
       var r = Object.assign(
@@ -20,4 +21,17 @@ export function contacts (state, action) {
   }
 }
 
-export default contacts;
+function visibilityFilter(state = 'SHOW_ALL', action) {
+  switch (action.type) {
+    case 'SET_FILTER':
+      return action.filter;
+    default:
+      return state;
+  }
+}
+const contactApp = combineReducers({
+  visibilityFilter,
+  contacts
+});
+
+export default contactApp;
