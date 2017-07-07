@@ -22,16 +22,28 @@ class MyForm extends Component {
     };
     
     this.history = props.history;
-    
-    var obj = ['paul'];
-    var obj2 = ['narf@aol.com'];
-    var cloned = [...obj, ...obj2];
-    console.log(cloned);
+    console.log(this.props);
+    if (this.props.edit_id) {
+      this.title = "Edit Contact";
+      this.read_data();
+    } else {
+      this.title = "Add Contact";
+    }
+  }
+  
+  read_data () {
+    if (this.props.contacts[this.props.edit_id]) {
+      console.log('DATA AQUIRED', this.props.contacts[this.props.edit_id]);
+      this.state = this.props.contacts[this.props.edit_id];
+      this.setState(this.state);
+    } else {
+      setTimeout(() => {
+        this.read_data();
+      }, 100);
+    }
   }
   
   update_state (event, key) {
-    console.log(event.target.value);
-    console.log(event.target);
     //this.setState({[key]: event.target.value});
     var new_state = {};
     new_state[key] = event.target.value;
@@ -44,14 +56,18 @@ class MyForm extends Component {
   
   handleSubmit (event) {
     console.log('submitted:', this.state);
-    //database.ref('contacts/' + User.user.uid).set({
-    //  paul: {name: "Paul B"},
-    //  jim: {name: "Jim"},
-    //});
     event.preventDefault();
     //this.history.push('/');
     
-    this.props.onSubmit(this.state.name, this.state);
+    if (this.props.edit_id) {
+      // edit action
+    } else {
+      this.props.onAdd(this.state.name, this.state);
+    }
+  }
+  
+  edit_link (key) {
+    return '/edit/' + key;
   }
   
   render () {
@@ -59,10 +75,10 @@ class MyForm extends Component {
       <div>
         <form onSubmit={event => this.handleSubmit(event)}>
           <Card className="md-card">
-            <CardTitle title="My Form"/>
+            <CardTitle title={this.title}/>
             <CardText>
               <TextField floatingLabelText="Your Name"
-              defaultValue={this.state.name}
+              value={this.state.name}
               onChange={event => this.update_state(event, 'name')}/>
               <br/><br/>
               <SelectField
@@ -80,7 +96,7 @@ class MyForm extends Component {
         </form>
         {Object.keys(this.props.contacts).map((key) => {
           return <div key={key}>
-            Key: {key}, Value: {this.props.contacts[key].name}
+            Key: <a href={this.edit_link(key)}>{key}</a>, Value: {this.props.contacts[key].name}
           </div>;
         })}
       </div>
@@ -94,7 +110,7 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    onSubmit: function (id, data) {
+    onAdd: function (id, data) {
       dispatch(addContact(id, data));
     }
   }

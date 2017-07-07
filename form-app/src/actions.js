@@ -11,5 +11,12 @@ export function editContact (id, data) {
     type: 'EDIT_CONTACT',
     id: id,
     data: data
-  }
+  };
+}
+
+export function initContacts (data) {
+  return {
+    type: 'INIT_CONTACTS',
+    data: data
+  };
 }

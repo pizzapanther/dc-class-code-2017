@@ -1,5 +1,8 @@
 import * as firebase from 'firebase';
 
+import store from './store';
+import { initContacts } from './actions';
+
 var config = {
   apiKey: "AIzaSyClPgKDycgtvTMAJBSY8396SmcNUgw3QKg",
   authDomain: "dc-contacts-app-35976.firebaseapp.com",
@@ -20,18 +23,11 @@ export function auth () {
       .then(function (result) {
         User.user = result.user;
         resolve(User);
-        
-        setTimeout(function () {
-          database.ref('contacts/' + User.user.uid)
-            .once('value').then(function(contacts) {
-              console.log(contacts.val());
-            });
-        }, 2000);
-        
-        database.ref('contacts/' + User.user.uid)
-          .on('value', function(contacts) {
-            console.log(contacts.val());
-          });
+        init_data();
+        // database.ref('contacts/' + User.user.uid)
+        //   .on('value', function(contacts) {
+        //     console.log(contacts.val());
+        //   });
       })
       .catch(function (e) {
         reject(e);
@@ -39,11 +35,27 @@ export function auth () {
   });
 }
 
+
+function init_data () {
+  database.ref('contacts/' + User.user.uid)
+    .once('value').then(function(contacts) {
+      contacts = contacts.val();
+      store.dispatch(initContacts(contacts));
+    });
+}
+
+let unsubscribe = store.subscribe(() => {
+  database.ref('contacts/' + User.user.uid).set(
+    store.getState()
+  ); 
+});
+
 firebase.auth()
   .onAuthStateChanged(function(user) {
     if (user) {
       User.user = user;
       console.log(user);
+      init_data();
     }
   });
   

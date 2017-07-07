@@ -4,7 +4,10 @@ import './App.css';
 
 import AppBar from 'material-ui/AppBar';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+
 import MyForm from './myform';
+import EditForm from './edit_form';
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {red700} from 'material-ui/styles/colors';
 
@@ -54,7 +57,7 @@ const AppMenu = (props) => (
       <Link to="/" className="icon-menu">Home</Link>
     </MenuItem>
     <MenuItem>
-      <Link to="/form" className="icon-menu">Form</Link>
+      <Link to="/add" className="icon-menu">Add Form</Link>
     </MenuItem>
   </IconMenu>
 );
@@ -84,9 +87,9 @@ class App extends Component {
                 </div>
                 <Switch>
                   <Route exact path="/" component={Home}/>
-                  <Route path="/form" component={MyForm}/>
+                  <Route path="/add" component={MyForm}/>
                   <Redirect from="/old-form" to="/form"/>
-                  <Route path="/article/:id" component={Article}/>
+                  <Route path="/edit/:id" component={EditForm}/>
                   <Route component={NoMatch}/>
                 </Switch>
               </div>

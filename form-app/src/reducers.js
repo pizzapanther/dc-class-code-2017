@@ -1,9 +1,5 @@
-import { combineReducers } from 'redux';
 
-var initialState = {
-  contacts: {},
-  showFavorites: 'SHOW_ALL'
-};
+var initialState = {};
 
 export function contacts (state = initialState, action) {
   switch (action.type) {
@@ -15,6 +11,10 @@ export function contacts (state = initialState, action) {
       );
       console.log(r);
       return r;
+      
+    case 'INIT_CONTACTS':
+      console.log('INIT', action.data);
+      return action.data  || {};
       
     default:
       return state;
@@ -29,9 +29,5 @@ function visibilityFilter(state = 'SHOW_ALL', action) {
       return state;
   }
 }
-const contactApp = combineReducers({
-  visibilityFilter,
-  contacts
-});
 
-export default contactApp;
+export default contacts;
