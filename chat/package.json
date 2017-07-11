@@ -9,8 +9,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "axios": "^0.16.2",
     "express": "^4.15.3",
     "hbs": "^4.0.1",
+    "jsonwebtoken": "^7.4.1",
     "less": "^2.7.2",
     "socket.io": "^2.0.2",
     "watch-run": "^1.2.5"

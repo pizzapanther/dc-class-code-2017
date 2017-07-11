@@ -12,10 +12,12 @@
     </h1>
     <input id="message" onkeypress="send_message(event)">
     <pre id="chat-box"></pre>
+    <script src="/static/axios.min.js"></script>
     <script src="/socket.io/socket.io.js"></script>
     <script>
       var server = io();
       var room;
+      var token = '{{token}}';
       
       server.on('connect', function (s) {
         console.log('connected');
@@ -35,7 +37,7 @@
         if (char == '13') {
           var msg = document.getElementById('message');
           //server.emit('incoming', msg.value);
-          server.emit('incoming', {room: room, msg: msg.value});
+          server.emit('incoming', {room: room, msg: msg.value, token: token});
           msg.value = '';
         }
       }
