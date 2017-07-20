@@ -1,0 +1,21 @@
+{
+  "name": "intro-to-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.1.0",
+    "chai-http": "^3.0.0",
+    "mocha": "^3.4.2",
+    "nock": "^9.0.14"
+  },
+  "dependencies": {
+    "axios": "^0.16.2",
+    "express": "^4.15.3"
+  }
+}
