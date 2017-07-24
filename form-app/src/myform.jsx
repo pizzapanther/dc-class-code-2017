@@ -13,7 +13,7 @@ import database, {User} from './fsociety';
 import { addContact } from './actions';
 import { connect } from 'react-redux';
 
-class MyForm extends Component {
+export class MyForm extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -116,8 +116,8 @@ function mapDispatchToProps (dispatch) {
   }
 }
 
-MyForm = connect(
+var MyFormRedux = connect(
   mapStateToProps, mapDispatchToProps
 )(MyForm);
 
-export default MyForm
+export default MyFormRedux
