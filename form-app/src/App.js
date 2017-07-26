@@ -86,10 +86,10 @@ class App extends Component {
                   <button onClick={(e) => this.login(e)}>Login</button>
                 </div>
                 <Switch>
-                  <Route exact path="/" component={Home}/>
-                  <Route path="/add" component={MyForm}/>
-                  <Redirect from="/old-form" to="/form"/>
-                  <Route path="/edit/:id" component={EditForm}/>
+                  <Route exact path="/dc-class-code-2017/" component={Home}/>
+                  <Route path="/dc-class-code-2017/add" component={MyForm}/>
+                  <Redirect from="/dc-class-code-2017/old-form" to="/form"/>
+                  <Route path="/dc-class-code-2017/edit/:id" component={EditForm}/>
                   <Route component={NoMatch}/>
                 </Switch>
               </div>
